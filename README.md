@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+To run this application, remember to do the following (instructions given for Mac OS):
 
-Things you may want to cover:
+* Install Redis: `brew install redis`
 
-* Ruby version
+* Run Redis server: `/usr/local/bin/redis-server` (in a separate terminal window)
 
-* System dependencies
+* Launch Sidekiq for async jobs in a separate terminal window: `bundle exec sidekiq`
 
-* Configuration
+* Launch Faye service in a separate terminal window: `rackup sync.ru -E production`
 
-* Database creation
+* Launch Crono service in a separate terminal window in your Rails project root directory: `crono` (or `bundle exec crono`)
 
-* Database initialization
+* In a separate terminal window start Rails server: `rails s`
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+Also, you have to have PostgresQL installed and running (use PostgresApp and PGAdmin apps). The database configuration is located in `config/database.yml`. Here is an example of the `:development` config lines for PostgresQL:
 
-* Deployment instructions
-
-* ...
+```
+development:
+  <<: *default
+  database: dc_development
+  username: <your_user_name>
+  password: <your_password>
+  host: <%= ENV['IP'] %>
+```
+In case of SSL certificate problem during your authentication thru Facebook look for solution here: 'https://gist.github.com/fnichol/867550'.
