@@ -13,5 +13,20 @@
 !/log/.keep
 !/tmp/.keep
 
+.idea/
+*.iml
+.DS_Store
+
+# Ignore application configuration
+/config/database.yml
+/config/application.yml
+/config/secrets.yml
+
+/public/uploads
+psql_launch.md
+/config/email.yml
+comments.md
+dump.rdb
+
 # Ignore Byebug command history file.
 .byebug_history
