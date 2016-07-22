@@ -3,6 +3,8 @@ class User < ApplicationRecord
   TEMP_EMAIL_PREFIX = 'dc@user'
   TEMP_EMAIL_REGEX = /\Adc@user/
   
+  has_many :posts
+  
   rolify
   
   # Include default devise modules. Others available are:

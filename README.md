@@ -20,7 +20,7 @@ Also, you have to have PostgresQL installed and running (use PostgresApp and PGA
 ```
 development:
   <<: *default
-  database: dc_development
+  database: dc
   username: <your_user_name>
   password: <your_password>
   host: <%= ENV['IP'] %>
