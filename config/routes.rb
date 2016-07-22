@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'profiles/show'
+
+  get 'profiles/edit'
+
+  get 'profiles/update'
+  
+  resource :profile, only: [:show, :update, :edit]
   resources :flats
   resources :posts
   devise_for :users, :controllers => { omniauth_callbacks: 'omniauth_callbacks' }

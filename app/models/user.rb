@@ -3,8 +3,10 @@ class User < ApplicationRecord
   TEMP_EMAIL_PREFIX = 'dc@user'
   TEMP_EMAIL_REGEX = /\Adc@user/
   
-  has_many :posts
-  
+  after_create :create_profile
+  has_one :profile, dependent: :destroy
+  has_many :posts  
+
   rolify
   
   # Include default devise modules. Others available are:
@@ -59,4 +61,8 @@ class User < ApplicationRecord
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
+
+  def create_profile
+    Profile.create(user: self)
+  end 
 end
