@@ -1,6 +1,10 @@
 class User < ApplicationRecord
+  
   TEMP_EMAIL_PREFIX = 'dc@user'
   TEMP_EMAIL_REGEX = /\Adc@user/
+  
+  rolify
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :invitable, :database_authenticatable, :registerable,
