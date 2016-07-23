@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722144722) do
+ActiveRecord::Schema.define(version: 20160723060617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "crono_jobs", force: :cascade do |t|
+    t.string   "job_id",            null: false
+    t.text     "log"
+    t.datetime "last_performed_at"
+    t.boolean  "healthy"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["job_id"], name: "index_crono_jobs_on_job_id", unique: true, using: :btree
+  end
 
   create_table "flats", force: :cascade do |t|
     t.integer  "number"
@@ -30,6 +40,27 @@ ActiveRecord::Schema.define(version: 20160722144722) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_identities_on_user_id", using: :btree
+  end
+
+  create_table "options", force: :cascade do |t|
+    t.string   "poll_option"
+    t.integer  "poll_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["poll_id"], name: "index_options_on_poll_id", using: :btree
+  end
+
+  create_table "polls", force: :cascade do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "start"
+    t.datetime "finish"
+    t.integer  "status"
+    t.integer  "poll_type"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_polls_on_user_id", using: :btree
   end
 
   create_table "posts", force: :cascade do |t|
@@ -110,7 +141,21 @@ ActiveRecord::Schema.define(version: 20160722144722) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.integer  "option_vote"
+    t.integer  "option_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["option_id"], name: "index_votes_on_option_id", using: :btree
+    t.index ["user_id"], name: "index_votes_on_user_id", using: :btree
+  end
+
   add_foreign_key "identities", "users"
+  add_foreign_key "options", "polls"
+  add_foreign_key "polls", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "profiles", "users"
+  add_foreign_key "votes", "options"
+  add_foreign_key "votes", "users"
 end

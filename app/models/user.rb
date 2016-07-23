@@ -5,7 +5,12 @@ class User < ApplicationRecord
   
   after_create :create_profile
   has_one :profile, dependent: :destroy
-  has_many :posts  
+  has_many :posts
+  has_many :identities, dependent: :destroy
+  has_many :emails, dependent: :destroy
+  has_many :polls, -> { includes :options }
+  accepts_nested_attributes_for :polls
+  has_many :votes
 
   rolify
   
